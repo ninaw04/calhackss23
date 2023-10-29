@@ -23,8 +23,7 @@ async function fetchData(res) {
       .then(response => response.json())
       .then(json => data = json[0])
     res(null, {
-      result: { text: `longitude: ${data.longitude} latitude: ${data.latitude}
-       time: ${data.time}` },
+      result: { text: `longitude: ${data.long} latitude: ${data.lat}  ` },
     });
   } catch (error) {
     res(null, {
