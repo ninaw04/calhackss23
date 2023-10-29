@@ -20,37 +20,27 @@ Page(
     state: {},
     onInit() {
       const callback = () => {
-        console.log("pos_status", geolocation.getStatus());
+        console.log('pos_status', geolocation.getStatus())
 
         const lat = geolocation.getLatitude();
         const long = geolocation.getLongitude();
         this.syncData({
           lat,
-          long,
-        });
-      };
-      const callback2 = () => {
-        console.log("fetching ");
-        this.fetchData();
-      };
-
+          long
+        })
+      }
       geolocation.start();
-      geolocation.onChange(callback2);
+      geolocation.onChange(callback);
 
-      logger.log("page onInit invoked");
+      logger.log('page onInit invoked');
     },
     build() {
+
       hmUI.createWidget(hmUI.widget.BUTTON, {
         ...PUT_BUTTON,
         click_func: (button_widget) => {
           logger.log("click button");
           // this.postData();
-          const lat = geolocation.getLatitude();
-          const long = geolocation.getLongitude();
-          this.syncData({
-            lat,
-            long,
-          });
         },
       });
       hmUI.createWidget(hmUI.widget.BUTTON, {
@@ -70,8 +60,6 @@ Page(
           logger.log("receive data");
           const { result = {} } = data;
           const { text } = result;
-          // console.log("rahhhhhhh")
-          console.log(text)
           if (!textWidget) {
             textWidget = hmUI.createWidget(hmUI.widget.TEXT, {
               ...GET_RESULT_TEXT,
@@ -84,26 +72,27 @@ Page(
         .catch((res) => {});
     },
 
+
     syncData(data) {
       // layout.updateTxtUploading()
       console.log("changing data");
       return this.httpRequest({
-        method: "post",
+        method: 'post',
         url: `${url}/locationData`,
         body: data,
       })
-        .then((result) => {
-          // layout.updateTxtSuccess()
-          logger.log("result => %j", result);
-        })
-        .catch((error) => {
-          // layout.updateTxtError()
-          logger.error("error => %j", error);
-        });
+      .then((result) => {
+        // layout.updateTxtSuccess()
+        logger.log('result => %j', result)
+      })
+      .catch((error) => {
+        // layout.updateTxtError()
+        logger.error('error => %j', error);
+      })
     },
     onDestroy() {
-      logger.log("page onDestroy invoked");
-    },
+      logger.log('page onDestroy invoked')
+    }
 
     // postData() {
     //   this.request({
